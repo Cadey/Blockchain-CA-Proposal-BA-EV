@@ -37,7 +37,7 @@ The BA-EV certificate will extend the standard X.509 certificate with a new exte
   - **Critical**: Set to `false`, indicating that systems that don't recognize this extension can safely ignore it.
   - **Value**: An array of key-value pairs:
     - **Network Type**: String (e.g., "XRPL", "Eth", "BTC").
-    - **Address**: String (e.g., "khkdshfkdjshfkjdshf" for XRPL, "0x75g547632d4762" for Eth).
+    - **Address**: String (e.g., "rUWBFKEkhxuYuVUaY..." for XRPL, "0x3fe17d98a6f97985fb3dc3..." for Eth).
 
 ## 5. Validation Process
 
