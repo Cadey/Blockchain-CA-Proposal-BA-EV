@@ -1,49 +1,49 @@
-# Blockchain Address Extended Validation (BA-EV) Certificate Proposal
-
 ## 1. Introduction
 
-With the rise of blockchain technology and its integration into various sectors, there's an increasing need to verify the authenticity of blockchain addresses associated with established entities. This proposal introduces a new type of certificate, the Blockchain Address Extended Validation (BA-EV) certificate, which aims to link verified entities with their blockchain addresses securely.
+With the rise of blockchain technology, there's an increasing need to verify the authenticity of blockchain addresses associated with established entities. This proposal introduces the Blockchain Address Extended Validation (BA-EV) certificate, aiming to securely link verified entities with their blockchain addresses.
 
 ## 2. Objective
 
-To provide a standardized, secure, and verifiable method for entities to associate their identity with specific blockchain addresses, ensuring that the entity in question controls the addresses listed in the certificate.
+To provide a standardized, secure, and verifiable method for entities to associate their identity with specific blockchain addresses, ensuring the entity controls the addresses listed in the certificate.
 
-## 3. Certificate Details
+## 3. Technical Background
 
-- **Name**: Blockchain Address Extended Validation (BA-EV) Certificate
-- **Validation Level**: Extended Validation, following the rigorous identity checks of standard EV certificates.
-- **Unique Feature**: Contains an array of blockchain addresses and their corresponding network types.
+### 3.1 X.509 Certificate Structure
 
-## 4. Certificate Structure
+X.509 is a standard defining the format of public key certificates. An X.509 certificate contains:
 
-The BA-EV certificate will include:
+- **Version**: Indicates the X.509 version.
+- **Serial Number**: A unique number assigned by the CA to the certificate.
+- **Signature Algorithm**: The algorithm used by the CA to sign the certificate.
+- **Issuer**: The entity that verifies the information and issues the certificate.
+- **Validity**: Start and end dates between which the certificate is valid.
+- **Subject**: The entity that the certificate is issued to.
+- **Public Key**: The public key of the entity.
+- **Extensions**: Additional fields that provide extra information about the certificate.
 
-- All standard fields present in a typical EV certificate, such as:
-  - `Common Name (CN)`
-  - `Organization (O)`
-  - `Organizational Unit (OU)`
-  - `Country (C)`
-  - `State (ST)`
-  - `Locality (L)`
-  - `Serial Number`
-  - `Validity Period`
-  - `Issuer`
-  - `Signature Algorithm`
-  - `Public Key`
+### 3.2 Certificate Generation Process
 
-- A new field named `Blockchain Addresses`:
-  - Data Type: Array of Objects
-  - Each object will consist of:
-    - **Network Type**: String (e.g., "XRPL", "Eth", "BTC")
-    - **Address**: String (e.g., "khkdshfkdjshfkjdshf" for XRPL, "0x75g547632d4762" for Eth)
+1. **Certificate Signing Request (CSR) Creation**: The entity generates a private-public key pair and creates a CSR, which includes the public key and other organizational details.
+2. **Submission to CA**: The entity sends the CSR to the CA for signing.
+3. **Verification by CA**: The CA verifies the entity's details. For EV certificates, this is an extensive process.
+4. **Certificate Issuance**: Once verified, the CA signs the CSR with its private key, creating the certificate.
+
+## 4. Proposed BA-EV Certificate Structure
+
+The BA-EV certificate will extend the standard X.509 certificate with a new extension for blockchain addresses:
+
+- **Blockchain Addresses Extension**:
+  - **OID (Object Identifier)**: A unique identifier for this extension.
+  - **Critical**: Set to `false`, indicating that systems that don't recognize this extension can safely ignore it.
+  - **Value**: An array of key-value pairs:
+    - **Network Type**: String (e.g., "XRPL", "Eth", "BTC").
+    - **Address**: String (e.g., "khkdshfkdjshfkjdshf" for XRPL, "0x75g547632d4762" for Eth).
 
 ## 5. Validation Process
 
-1. **Standard EV Validation**: The Certificate Authority (CA) will perform all standard identity checks associated with EV validation. This includes verifying the entity's legal, physical, and operational existence.
-  
-2. **Blockchain Address Verification**: 
-   - The entity must prove ownership or control over each blockchain address they wish to include in the certificate.
-   - This can be achieved by signing a message provided by the CA using the private key associated with the blockchain address or by making a microtransaction to an address specified by the CA.
+1. **Standard EV Validation**: The CA performs standard identity checks associated with EV validation.
+2. **Blockchain Address Verification**: The entity proves ownership or control over each blockchain address they wish to include.
+3. **Certificate Generation with Extension**: The CA generates the BA-EV certificate, including the blockchain addresses extension.
 
 ## 6. Use Cases
 
